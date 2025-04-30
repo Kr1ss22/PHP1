@@ -1,104 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="et">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ülesanded</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body class="container mt-5">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PHP Harjutused</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    </head>
+<body>
+    <div class="container">
+        <h1>Harjutus 06</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <?php
 
-<h2>Genereeri</h2>
-<?php
+                echo "<h2>1. Genereeri</h2>";
 
-for ($i = 1; $i <= 100; $i++) {
-    echo $i . ". ";
-    if ($i % 10 == 0) {
-        echo "<br>";
-    }
-}
-?>
+                $number = 1;
+                do{
+                    echo $number.' '; 
+                    $number++;	
+                } while($number <=100);
 
-<h2>Rida</h2>
-<?php
+                echo "<br>";
+                echo "<br>";
+                $arv = 1;
+                while($arv <=10){
+                    echo $arv.'<br>'; 
+                    $arv++;	
+                }
 
-for ($i = 0; $i < 10; $i++) {
-    echo "*";
-}
-?>
+                echo "<br>";
 
-<h2>Rida II</h2>
-<?php
+                $arv1 = 1;
+                while($arv1 <=10){
+                    echo "$arv1. "; 
+                    $arv1++;	
+                }
 
-for ($i = 0; $i < 10; $i++) {
-    echo "*<br>";
-}
-?>
+                echo "<br>";
+                echo "<br>";
 
-<h2>Ruut</h2>
-<form method="get" class="form-inline">
-    <div class="form-group mb-2">
-        <label for="size" class="sr-only">Suurus</label>
-        <input type="number" class="form-control" id="size" name="size" placeholder="Suurus">
+                echo "<h2>2. Rida</h2>";
+
+
+                for($pikkus=1; $pikkus<=10; $pikkus++){ 
+                    echo '*';
+                }
+
+                echo "<br>";
+                echo "<br>";
+
+                echo "<h2>3. Rida II</h2>";
+
+
+                for($pikkus=1; $pikkus<=10; $pikkus++){ 
+                    echo '*<br>';
+                }
+
+                echo "<br>";
+
+                echo "<h2>4. Ruut</h2>";
+
+                for($rida=1; $rida<=5; $rida++){ 
+                    for($veerg=1; $veerg<=5; $veerg++){ 
+                            echo '* ';	
+                        }
+                    echo '<br>';
+                }
+                echo "<br>";
+
+                echo "<h2>5. Kahanev</h2>";
+
+                $kahanev = 10;
+                while($kahanev >=1){
+                    echo $kahanev.'<br>'; 
+                    $kahanev--;	
+                }
+                
+                echo "<br>";
+
+                echo "<h2>6. Kolmega jagunevad</h2>";
+
+                $number = 1;
+                do{
+                    if($number % 3 == 0){
+                        echo $number.' '; 
+                    }
+                    $number++;	
+                } while($number <=100);
+
+                echo "<br>";
+
+                echo "<h2>7. Kolmega jagunevad</h2>";
+
+                $naised = array('Mario', 'Tehvan', 'Roomet');
+
+                $mehed = array('Agata', 'rohkem', 'eitea');
+
+                for($kogus=0; $kogus<count($naised); $kogus++){
+                    echo $naised[$kogus].' - '.$mehed[$kogus].'<br>';
+                }
+
+                echo "<br>";
+
+
+                ?>
+            </div>
+        </div>
+
     </div>
-    <button type="submit" class="btn btn-primary mb-2">Loo ruut</button>
-</form>
-<?php
-if (!empty($_GET['size'])) {
-    $size = $_GET['size'];
-    for ($i = 0; $i < $size; $i++) {
-        for ($j = 0; $j < $size; $j++) {
-            echo "* ";
-        }
-        echo "<br>";
-    }
-}
-?>
-
-<h2>Kahanev</h2>
-<?php
-
-for ($i = 10; $i >= 1; $i--) {
-    echo $i . "<br>";
-}
-?>
-
-<h2>Kolmega jagunevad</h2>
-<?php
-
-for ($i = 1; $i <= 100; $i++) {
-    if ($i % 3 == 0) {
-        echo $i . " ";
-    }
-}
-?>
-
-<h2>Massiivid ja tsüklid</h2>
-<?php
-
-$poiste_massiiv = ["Mati", "Kalle", "Jüri", "Peeter", "Toomas"];
-$tudrukute_massiiv = ["Mari", "Kati", "Liisa", "Anne", "Eva"];
-
-
-for ($i = 0; $i < count($poiste_massiiv); $i++) {
-    echo $poiste_massiiv[$i] . " ja " . $tudrukute_massiiv[$i] . "<br>";
-}
-?>
-
-<h2>Massiivid ja tsüklid (Bonus)</h2>
-<?php
-
-$poiste_koopia = $poiste_massiiv;
-$tudrukute_koopia = $tudrukute_massiiv;
-
-
-shuffle($poiste_koopia);
-shuffle($tudrukute_koopia);
-
-for ($i = 0; $i < count($poiste_koopia); $i++) {
-    echo $poiste_koopia[$i] . " ja " . $tudrukute_koopia[$i] . "<br>";
-}
-?>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
+
 </html>
