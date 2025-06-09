@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>kmustkivi.com</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         .navbar {
@@ -134,23 +134,23 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand p-2" href="#">kmustkivi.com</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand p-2" href="index.php">kmustkivi.com</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Avaleht</a>
+                        <a class="nav-link <?= ($_GET['leht'] ?? '') === 'avaleht' ? 'active' : '' ?>" href="index1.php">Avaleht</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pood.php">Pood</a>
+                        <a class="nav-link <?= ($_GET['leht'] ?? '') === 'pood' ? 'active' : '' ?>" href="pood.php">Pood</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="kontakt.php">Kontakt</a>
+                        <a class="nav-link <?= ($_GET['leht'] ?? '') === 'kontakt' ? 'active' : '' ?>" href="kontakt.php">Kontakt</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="admin.php">Admin</a>
+                        <a class="nav-link <?= ($_GET['leht'] ?? '') === 'admin' ? 'active' : '' ?>" href="admin.php">Admin</a>
                     </li>
                     <li class="nav-item text-center mt-2">
                         <i class="bi bi-bag"></i>
@@ -161,79 +161,52 @@
     </nav>
 
     <?php
+    // Bannerid ainult avalehe jaoks
     $bannerid = [
-        [
-            'pilt' => 'img/pilt1.jpg',
-            'pealkiri' => 'parim pakkumine',
-            'alampealkiri' => 'osta 1 saad 1',
-            'lisainfo' => 'The best classic dress is on sale at coro'
-        ],
-        [
-            'pilt' => 'img/pilt2.jpg',
-            'pealkiri' => 'kevad/suvi',
-            'alampealkiri' => 'kıik rohelised',
-            'lisainfo' => '20% soodsamalt'
-        ],
-        [
-            'pilt' => 'img/pilt3.jpg',
-            'pealkiri' => 'suur allahindlus',
-            'alampealkiri' => 'kuni 50% alla',
-            'lisainfo' => 'Ainult t‰na!'
-        ],
-        [
-            'pilt' => 'img/pilt4.jpg',
-            'pealkiri' => 'uus kollektsioon',
-            'alampealkiri' => 'vaata uusimaid tooteid',
-            'lisainfo' => 'Tule ja inspireeru!'
-        ],
-        [
-            'pilt' => 'img/pilt5.jpg',
-            'pealkiri' => 'eripakkumine',
-            'alampealkiri' => 'eriline valik',
-            'lisainfo' => 'Ainult valitud tooted!'
-        ]
+        ['pilt' => 'img/pilt1.jpg', 'pealkiri' => 'parim pakkumine', 'alampealkiri' => 'osta 1 saad 1', 'lisainfo' => 'The best classic dress is on sale at coro'],
+        ['pilt' => 'img/pilt2.jpg', 'pealkiri' => 'kevad/suvi', 'alampealkiri' => 'k√µik rohelised', 'lisainfo' => '20% soodsamalt'],
+        ['pilt' => 'img/pilt3.jpg', 'pealkiri' => 'suur allahindlus', 'alampealkiri' => 'kuni 50% alla', 'lisainfo' => 'Ainult t√§na!'],
+        ['pilt' => 'img/pilt4.jpg', 'pealkiri' => 'uus kollektsioon', 'alampealkiri' => 'vaata uusimaid tooteid', 'lisainfo' => 'Tule ja inspireeru!'],
+        ['pilt' => 'img/pilt5.jpg', 'pealkiri' => 'eripakkumine', 'alampealkiri' => 'eriline valik', 'lisainfo' => 'Ainult valitud tooted!']
     ];
 
-    $banner1 = $bannerid[array_rand($bannerid)];
-    $banner2 = $bannerid[array_rand($bannerid)];
-    while ($banner1 === $banner2) {
-        $banner2 = $bannerid[array_rand($bannerid)];
-    }
-    ?>
-
-    <div class="container banner-container">
-        <div class="banner">
-            <img src="<?php echo $banner1['pilt']; ?>" alt="Banner 1">
-            <div class="banner-text">
-                <p class="alampealkiri"><?php echo $banner1['pealkiri']; ?></p>
-                <h2><?php echo $banner1['alampealkiri']; ?></h2>
-                <p class="lisainfo"><?php echo $banner1['lisainfo']; ?></p>
-                <button>Vaata l‰hemalt</button>
-            </div>
-        </div>
-        <div class="banner">
-            <img src="<?php echo $banner2['pilt']; ?>" alt="Banner 2">
-            <div class="banner-text">
-                <p class="alampealkiri"><?php echo $banner2['pealkiri']; ?></p>
-                <h2><?php echo $banner2['alampealkiri']; ?></h2>
-                <p class="lisainfo"><?php echo $banner2['lisainfo']; ?></p>
-                <button>Tutvu l‰hemalt</button>
-            </div>
-        </div>
-    </div>
-
-    <?php
     if (!empty($_GET['leht'])) {
         $leht = htmlspecialchars($_GET['leht']);
-        $lubatud = array('pood', 'kontakt', 'admin');
-        $kontroll = in_array($leht, $lubatud);
-        if ($kontroll == true) {
+        $lubatud = ['pood', 'kontakt', 'admin'];
+        if (in_array($leht, $lubatud)) {
             include($leht . '.php');
         } else {
             echo '<h1 class="text-center mt-4">Lehte ei eksisteeri!</h1>';
         }
     } else {
+        // Bannerite kuvamine ainult avalehel
+        $banner1 = $bannerid[array_rand($bannerid)];
+        $banner2 = $bannerid[array_rand($bannerid)];
+        while ($banner1 === $banner2) {
+            $banner2 = $bannerid[array_rand($bannerid)];
+        }
         ?>
+        <div class="container banner-container">
+            <div class="banner">
+                <img src="<?= $banner1['pilt']; ?>" alt="Banner 1">
+                <div class="banner-text">
+                    <p class="alampealkiri"><?= $banner1['pealkiri']; ?></p>
+                    <h2><?= $banner1['alampealkiri']; ?></h2>
+                    <p class="lisainfo"><?= $banner1['lisainfo']; ?></p>
+                    <button>Vaata l√§hemalt</button>
+                </div>
+            </div>
+            <div class="banner">
+                <img src="<?= $banner2['pilt']; ?>" alt="Banner 2">
+                <div class="banner-text">
+                    <p class="alampealkiri"><?= $banner2['pealkiri']; ?></p>
+                    <h2><?= $banner2['alampealkiri']; ?></h2>
+                    <p class="lisainfo"><?= $banner2['lisainfo']; ?></p>
+                    <button>Tutvu l√§hemalt</button>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
             <div class="row text-center mt-5 mb-5">
                 <h2 class="parimad-pakkumised">Parimad pakkumised</h2>
@@ -249,7 +222,7 @@
                                 <img src='{$andmed[0]}' class='card-img-top' alt='{$andmed[1]}'>
                                 <div class='card-body'>
                                     <h5 class='card-title'>{$andmed[1]}</h5>
-                                    <p class='card-text'>{$andmed[2]}Ä</p>
+                                    <p class='card-text'>{$andmed[2]}‚Ç¨</p>
                                 </div>
                             </div>
                         </div>";
