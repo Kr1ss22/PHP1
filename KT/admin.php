@@ -1,12 +1,4 @@
 <?php
-session_start();
-
-// Lihtne sessioonikontroll
-if (!isset($_SESSION['admin'])) {
-    $_SESSION['admin'] = true;
-}
-
-// Funktsioon toodete lugemiseks CSV-st
 function andmed() {
     $tooted = [];
     if (($csv = fopen("tooted.csv", "r")) !== false) {
@@ -19,7 +11,6 @@ function andmed() {
     return $tooted;
 }
 
-// Funktsioon toodete salvestamiseks CSV-sse
 function salvesta($tooted) {
     if (($csv = fopen("tooted.csv", "w")) !== false) {
         fputcsv($csv, ["pilt", "toode", "hind"]);
@@ -30,7 +21,7 @@ function salvesta($tooted) {
     }
 }
 
-// Kustutamine
+
 if (isset($_GET['kustuta'])) {
     $kustuta = (int)$_GET['kustuta'];
     $tooted = andmed();
@@ -47,35 +38,38 @@ if (isset($_GET['kustuta'])) {
     }
 }
 
-// Uue toote lisamine
 $veateade = "";
 
 if (isset($_POST['lisa'])) {
-    $toote_nimi = $_POST['toote_nimi'];
-    $toote_hind = $_POST['toote_hind'];
+    $toote_nimi = trim($_POST['toote_nimi']);
+    $toote_hind = trim($_POST['toote_hind']);
     $pilt = $_FILES['toote_pilt'];
     $asukoht = "img/";
 
-    // Loome kausta, kui see puudub
     if (!is_dir($asukoht)) {
         mkdir($asukoht, 0777, true);
     }
 
-    // Kontrollime vigu
     if ($pilt['error'] !== UPLOAD_ERR_OK) {
-        $veateade = "Pildi üleslaadimine ebaõnnestus. Veakood: {$pilt['error']}";
+        $veateade = "Pildi uleslaadimine ebaonnestus. Veakood: {$pilt['error']}";
     } else {
-        // Turvalise pildinime tegemine
-        $pildi_nimi = $asukoht . time() . "_" . basename($pilt['name']);
-        // Üleslaadimine
-        if (move_uploaded_file($pilt['tmp_name'], $pildi_nimi)) {
-            $tooted = andmed();
-            $tooted[] = [$pildi_nimi, $toote_nimi, $toote_hind];
-            salvesta($tooted);
-            header("Location: admin.php");
-            exit;
+        // Turvalise pildinime tegemine - eemaldame erimargid ja lisame aja
+        $pildi_nimi = $asukoht . time() . "_" . preg_replace('/[^a-zA-Z0-9\._-]/', '', basename($pilt['name']));
+
+        $lubatud_tyybid = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!in_array(mime_content_type($pilt['tmp_name']), $lubatud_tyybid)) {
+            $veateade = "Lubatud on ainult JPEG ja PNG pildid.";
         } else {
-            $veateade = "move_uploaded_file ebaõnnestus.";
+            
+            if (move_uploaded_file($pilt['tmp_name'], $pildi_nimi)) {
+                $tooted = andmed();
+                $tooted[] = [$pildi_nimi, $toote_nimi, $toote_hind];
+                salvesta($tooted);
+                header("Location: admin.php");
+                exit;
+            } else {
+                $veateade = "Pildi salvestamine ebaonnestus.";
+            }
         }
     }
 }
@@ -110,7 +104,6 @@ if (isset($_POST['lisa'])) {
         <h1 class="display-4 fw-bold text-dark">Toote Haldus</h1>
     </div>
 
-    <!-- Toote lisamise vorm -->
     <form method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded shadow-sm mb-5">
         <h2 class="h4 fw-bold text-dark mb-4">Lisa uus toode</h2>
 
@@ -124,7 +117,7 @@ if (isset($_POST['lisa'])) {
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold">Toote hind (€):</label>
+            <label class="form-label fw-bold">Toote hind (â‚¬):</label>
             <input type="number" step="0.01" name="toote_hind" class="form-control" required>
         </div>
 
@@ -136,7 +129,6 @@ if (isset($_POST['lisa'])) {
         <button type="submit" name="lisa" class="btn btn-success w-100">Lisa toode</button>
     </form>
 
-    <!-- Olemasolevad tooted -->
     <h2 class="h4 fw-bold text-dark mb-4">Praegused tooted</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <?php
@@ -150,7 +142,7 @@ if (isset($_POST['lisa'])) {
                     <div class="card-body">
                         <h5 class="card-title fw-bold"><?= htmlspecialchars($toode[1]) ?></h5>
                         <p class="card-text"><?= $hind ?> &euro;</p>
-                        <a href="?kustuta=<?= $index ?>" class="btn btn-danger w-100">Kustuta</a>
+                        <a href="?kustuta=<?= $index ?>" class="btn btn-danger w-100" onclick="return confirm('Oled kindel, et soovid selle toote kustutada?')">Kustuta</a>
                     </div>
                 </div>
             </div>
