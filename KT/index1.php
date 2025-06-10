@@ -164,8 +164,8 @@
     // Bannerid ainult avalehe jaoks
     $bannerid = [
         ['pilt' => 'img/pilt1.jpg', 'pealkiri' => 'parim pakkumine', 'alampealkiri' => 'osta 1 saad 1', 'lisainfo' => 'The best classic dress is on sale at coro'],
-        ['pilt' => 'img/pilt2.jpg', 'pealkiri' => 'kevad/suvi', 'alampealkiri' => 'kõik rohelised', 'lisainfo' => '20% soodsamalt'],
-        ['pilt' => 'img/pilt3.jpg', 'pealkiri' => 'suur allahindlus', 'alampealkiri' => 'kuni 50% alla', 'lisainfo' => 'Ainult täna!'],
+        ['pilt' => 'img/pilt2.jpg', 'pealkiri' => 'kevad/suvi', 'alampealkiri' => 'kÃµik rohelised', 'lisainfo' => '20% soodsamalt'],
+        ['pilt' => 'img/pilt3.jpg', 'pealkiri' => 'suur allahindlus', 'alampealkiri' => 'kuni 50% alla', 'lisainfo' => 'Ainult tÃ¤na!'],
         ['pilt' => 'img/pilt4.jpg', 'pealkiri' => 'uus kollektsioon', 'alampealkiri' => 'vaata uusimaid tooteid', 'lisainfo' => 'Tule ja inspireeru!'],
         ['pilt' => 'img/pilt5.jpg', 'pealkiri' => 'eripakkumine', 'alampealkiri' => 'eriline valik', 'lisainfo' => 'Ainult valitud tooted!']
     ];
@@ -193,7 +193,7 @@
                     <p class="alampealkiri"><?= $banner1['pealkiri']; ?></p>
                     <h2><?= $banner1['alampealkiri']; ?></h2>
                     <p class="lisainfo"><?= $banner1['lisainfo']; ?></p>
-                    <button>Vaata lähemalt</button>
+                    <button>Vaata lÃ¤hemalt</button>
                 </div>
             </div>
             <div class="banner">
@@ -202,7 +202,7 @@
                     <p class="alampealkiri"><?= $banner2['pealkiri']; ?></p>
                     <h2><?= $banner2['alampealkiri']; ?></h2>
                     <p class="lisainfo"><?= $banner2['lisainfo']; ?></p>
-                    <button>Tutvu lähemalt</button>
+                    <button>Tutvu lÃ¤hemalt</button>
                 </div>
             </div>
         </div>
@@ -222,7 +222,7 @@
                                 <img src='{$andmed[0]}' class='card-img-top' alt='{$andmed[1]}'>
                                 <div class='card-body'>
                                     <h5 class='card-title'>{$andmed[1]}</h5>
-                                    <p class='card-text'>{$andmed[2]}€</p>
+                                    <p class='card-text'>{$andmed[2]}â‚¬</p>
                                 </div>
                             </div>
                         </div>";
