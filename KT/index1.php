@@ -193,7 +193,7 @@
                     <p class="alampealkiri"><?= $banner1['pealkiri']; ?></p>
                     <h2><?= $banner1['alampealkiri']; ?></h2>
                     <p class="lisainfo"><?= $banner1['lisainfo']; ?></p>
-                    <button>Vaata lÃ¤hemalt</button>
+                    <button>Vaata lähemalt</button>
                 </div>
             </div>
             <div class="banner">
@@ -202,7 +202,7 @@
                     <p class="alampealkiri"><?= $banner2['pealkiri']; ?></p>
                     <h2><?= $banner2['alampealkiri']; ?></h2>
                     <p class="lisainfo"><?= $banner2['lisainfo']; ?></p>
-                    <button>Tutvu lÃ¤hemalt</button>
+                    <button>Tutvu löhemalt</button>
                 </div>
             </div>
         </div>
