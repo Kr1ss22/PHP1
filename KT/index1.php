@@ -4,9 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>kmustkivi.com</title>
+
+    <!-- Bootstrap CSS raamistik -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap ikoonid -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
+        /* Navbari stiilid */
         .navbar {
             background-color: #e9ecef;
         }
@@ -28,6 +33,7 @@
             color: #000;
         }
 
+        /* Bannerite paigutus */
         .banner-container {
             display: flex;
             justify-content: space-between;
@@ -43,7 +49,7 @@
         .banner img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* hoiab pildi proportsioone */
         }
         .banner-text {
             position: absolute;
@@ -74,6 +80,7 @@
             margin-top: 10px;
         }
 
+        /* Jaluse stiilid */
         footer {
             background-color: #f8f9fa;
             padding: 60px 0;
@@ -85,6 +92,7 @@
             margin-left: 20px;
         }
 
+        /* Toote kaartide stiilid */
         .product-card {
             background-color: white;
             border-radius: 15px;
@@ -117,6 +125,7 @@
             margin-bottom: 0;
         }
 
+        /* Sektsiooni pealkirjad */
         .parimad-pakkumised {
             font-size: 2.5rem;
             font-weight: bold;
@@ -124,6 +133,7 @@
             margin-bottom: 20px;
         }
 
+        /* Laiuse piirang navbari ja footeris */
         .navbar .container-fluid, footer .container {
             max-width: 1400px;
             margin: 0 auto; 
@@ -132,14 +142,21 @@
     </style>
 </head>
 <body>
+    <!-- Navbari menüü -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
+            <!-- Logo -->
             <a class="navbar-brand p-2" href="index.php">kmustkivi.com</a>
+
+            <!-- Mobiili jaoks kokkuvolditav menüü -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Menüü lingid -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <!-- PHP ternary kontrollib, kas leht = avaleht, siis annab "active" klassi -->
                     <li class="nav-item">
                         <a class="nav-link <?= ($_GET['leht'] ?? '') === 'avaleht' ? 'active' : '' ?>" href="index1.php">Avaleht</a>
                     </li>
@@ -153,6 +170,7 @@
                         <a class="nav-link <?= ($_GET['leht'] ?? '') === 'admin' ? 'active' : '' ?>" href="admin.php">Admin</a>
                     </li>
                     <li class="nav-item text-center mt-2">
+                        <!-- Ostukoti ikoon -->
                         <i class="bi bi-bag"></i>
                     </li>
                 </ul>
@@ -161,7 +179,7 @@
     </nav>
 
     <?php
-    // Bannerid ainult avalehe jaoks
+    // Massiiv bannerite andmetega (pilt + tekstid)
     $bannerid = [
         ['pilt' => 'img/pilt1.jpg', 'pealkiri' => 'parim pakkumine', 'alampealkiri' => 'osta 1 saad 1', 'lisainfo' => 'The best classic dress is on sale at coro'],
         ['pilt' => 'img/pilt2.jpg', 'pealkiri' => 'kevad/suvi', 'alampealkiri' => 'kÃµik rohelised', 'lisainfo' => '20% soodsamalt'],
@@ -170,22 +188,25 @@
         ['pilt' => 'img/pilt5.jpg', 'pealkiri' => 'eripakkumine', 'alampealkiri' => 'eriline valik', 'lisainfo' => 'Ainult valitud tooted!']
     ];
 
+    // Kui URL-is on ?leht=midagi
     if (!empty($_GET['leht'])) {
-        $leht = htmlspecialchars($_GET['leht']);
-        $lubatud = ['pood', 'kontakt', 'admin'];
+        $leht = htmlspecialchars($_GET['leht']); // kaitse XSS vastu
+        $lubatud = ['pood', 'kontakt', 'admin']; // lubatud alamlehed
         if (in_array($leht, $lubatud)) {
-            include($leht . '.php');
+            include($leht . '.php'); // laeb vastava php lehe
         } else {
             echo '<h1 class="text-center mt-4">Lehte ei eksisteeri!</h1>';
         }
     } else {
-        // Bannerite kuvamine ainult avalehel
+        // Kui ?leht puudub → ollakse avalehel
+        // Valitakse 2 erinevat bannerit suvaliselt
         $banner1 = $bannerid[array_rand($bannerid)];
         $banner2 = $bannerid[array_rand($bannerid)];
         while ($banner1 === $banner2) {
             $banner2 = $bannerid[array_rand($bannerid)];
         }
         ?>
+        <!-- Bannerite kuvamine -->
         <div class="container banner-container">
             <div class="banner">
                 <img src="<?= $banner1['pilt']; ?>" alt="Banner 1">
@@ -207,22 +228,25 @@
             </div>
         </div>
 
+        <!-- Parimate pakkumiste sektsioon -->
         <div class="container">
             <div class="row text-center mt-5 mb-5">
                 <h2 class="parimad-pakkumised">Parimad pakkumised</h2>
             </div>
             <div class="row row-cols-1 row-cols-md-4 g-4">
                 <?php
+                // Toodete lugemine CSV failist
                 if ($csv = fopen("tooted.csv", "r")) {
-                    fgetcsv($csv);
+                    fgetcsv($csv); // esimese rea vahelejätmine (pealkirjad)
                     while ($andmed = fgetcsv($csv)) {
+                        // iga rida = üks toode (pilt, nimi, hind)
                         echo "
                         <div class='col'>
                             <div class='product-card'>
                                 <img src='{$andmed[0]}' class='card-img-top' alt='{$andmed[1]}'>
                                 <div class='card-body'>
                                     <h5 class='card-title'>{$andmed[1]}</h5>
-                                    <p class='card-text'>{$andmed[2]}â‚¬</p>
+                                    <p class='card-text'>{$andmed[2]}€</p>
                                 </div>
                             </div>
                         </div>";
@@ -236,6 +260,7 @@
     }
     ?>
 
+    <!-- Jalus -->
     <footer>
         <div class="container">
             <p>kmustkivi.com</p>
