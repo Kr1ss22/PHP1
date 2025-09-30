@@ -1,0 +1,23 @@
+<?php
+// Liitmise funktsioon
+function liida($a, $b) {
+    return $a + $b;
+}
+
+// Lahutamise funktsioon
+function lahuta($a, $b) {
+    return $a - $b;
+}
+
+// Muutujad
+$x = 10;
+$y = 4;
+
+// Arvutused
+$summa = liida($x, $y);
+$vahe = lahuta($x, $y);
+
+// Väljund
+echo "Liitmine: $x + $y = $summa<br>";
+echo "Lahutamine: $x - $y = $vahe";
+?>
